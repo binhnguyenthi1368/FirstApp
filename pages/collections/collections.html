@@ -1,0 +1,173 @@
+<ion-header>
+  <ion-navbar class="header-back" color="dogo-primary">
+    <ion-title>{{titleCollection}}</ion-title>
+  </ion-navbar>
+  <ion-row class="bg-white">
+    <ion-col col-6>
+      <ion-list class="btn-top-col" no-margin>
+        <ion-item no-padding>
+          <ion-select [(ngModel)]="selectedCollection" interface="popover">
+            <ion-option value="{{selectedCollectionFirst}}" (ionSelect)="viewCollection(selectedCollectionFirst, titleCollectionFirst)">Xem tất cả sản phẩm</ion-option>
+             <ion-option *ngFor="let lv3 of menuLv3" value="{{lv3.handle}}" (ionSelect)="viewCollection(lv3.handle, lv3.title)">
+              {{lv3.title}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+    <ion-col col-6>
+      <ion-list class="btn-top-col" no-margin>
+        <ion-item no-padding>
+          <ion-select [ngModel]="sortType" (ionChange)="onSelectChange($event)" interface="popover">
+            <ion-option value='created-descending' selected>Mới nhất</ion-option>
+            <ion-option value="price-descending">Giá từ cao đến thấp</ion-option>
+            <ion-option value="price-ascending">Giá từ thấp đến cao</ion-option>
+            <ion-option value="title-ascending">Từ A-Z</ion-option>
+            <ion-option value="title-descending">Từ Z-A</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+  <!-- slide menu cap 3 -->
+  <!-- <ion-grid class="menu-lv3">
+    <ion-slides slidesPerView="3.6" spaceBetween="10">
+      <ion-slide *ngFor="let i of ['Áo denim', 'Áo sơ mi', 'Áo nữ khoác', 'Áo trễ vai', 'Áo kiểu', 'Áo đôi']; let j = index" tappable (tap)="openCollection($event, 'thoi-trang-nu', i)">
+        <ion-row class="row color-lv3-{{j}}" align-self-center>
+          <ion-col col-4 class="lv3--img">
+            <img src="assets/images/icon/{{j}}.png">
+          </ion-col>
+          <ion-col col-8 class="lv3--title">
+            {{i}}
+          </ion-col>
+        </ion-row>
+      </ion-slide>
+    </ion-slides>
+  </ion-grid> -->
+  <ion-grid class="bg-timeout" *ngIf="notiTimeout && !loadingFirst">
+    <ion-row text-center class="mg-auto">
+      <ion-col col-12 class="fsize-19" margin-top>
+        Lỗi!
+      </ion-col>
+      <ion-col col-12 margin-bottom>
+        Vui lòng kiểm tra lại kết nối!
+      </ion-col>
+      <ion-col col-12 class="fsize-30">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="no-has-result" no-padding *ngIf="products?.length == 0 && loadingFirst">
+    <div style="height: 54px; width: 100%"></div>
+    <ion-row no-padding text-center>
+      <img src="assets/images/no-product.png">
+      <ion-col col-12 text-center>
+        <p class="noti-no-result fsize-14">Không có sản phẩm để hiển thị!</p>
+        <p class="fsize-12">Danh mục này hiện đang trống.</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-row class="collection products" *ngIf="products?.length > 0 && loadingFirst">
+    <div style="height: 54px; width: 100%"></div>
+    <ion-col col-6 *ngFor="let product of products">
+      <div class="pi">
+        <div class="pi__inner">
+          <div class="pi__image" tappable (tap)="productTapped($event, product.handle)">
+            <img src="{{product.featured_image}}">
+          </div>
+          <div class="pi__info">
+            <p class="pi__title" tappable (tap)="productTapped($event, product.handle)">{{product.title}}</p>
+            <p class="pi__price" *ngIf="(isAgencyRegular && product.isWholeSale) || !product.isWholeSale">
+              {{product.price_format}}
+              <del class="compare-price" *ngIf="product.compare_at_price != 0">{{product.compare_at_price_format}}</del>
+              <span class="sale-off" *ngIf="product.sale != '-0%'">{{product.sale}}</span>
+            </p>
+            <p class="pi__price" *ngIf="(!isAgencyRegular && product.isWholeSale)">
+              0₫
+            </p>
+          </div>
+        </div>
+      </div>
+    </ion-col>
+    <!-- <ng-container *ngFor="let item of items">
+      <ion-col col-6 *ngFor="let product of item">
+        <div class="pi">
+          <div class="pi__inner">
+            <div class="pi__image" tappable (tap)="productTapped($event, product.handle)">
+              <img src="{{product.featured_image}}">
+            </div>
+            <div class="pi__info">
+              <p class="pi__title" tappable (tap)="productTapped($event, product.handle)">{{product.title}}</p>
+              <p class="pi__price" *ngIf="(isAgencyRegular && product.isWholeSale) || !product.isWholeSale">
+                {{product.price_format}}
+                <del class="compare-price" *ngIf="product.compare_at_price != 0">{{product.compare_at_price_format}}</del>
+                <span class="sale-off" *ngIf="product.sale != '-0%'">{{product.sale}}</span>
+              </p>
+              <p class="pi__price" *ngIf="(!isAgencyRegular && product.isWholeSale)">
+                0₫
+              </p>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ng-container> -->
+  </ion-row>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="loading && !notiTimeout">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải thêm..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+<!-- loading first-->
+<ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="!loadingFirst && !notiTimeout">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <!---->
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <!---->
+        <!---->
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+    <!---->
+  </div>
+</ion-loading>
+

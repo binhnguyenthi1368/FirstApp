@@ -1,0 +1,136 @@
+<ion-menu [content]="content" [swipeEnabled]="true" class="menu-img" persistent="true" type="overlay">
+  <!-- <ion-header class="expanded bar bar-header disable-user-behavior" *ngIf="(authService.user | async) && typeUser.indexOf('đại lý') > -1"  style="background-image:url('assets/images/bg_agency.jpg');">
+    <div class="menu-bottom">
+      <div class="fsize-10">Chào mừng {{typeUser}}, <span class="fsize-11" text-uppercase><b>{{ displayName }}</b></span></div>
+      <span class="fsize-10">({{ (authService.user | async)?.email }})</span>
+    </div>
+  </ion-header>
+  <ion-header class="expanded bar bar-header disable-user-behavior" *ngIf="(authService.user | async) && typeUser == 'Cộng tác viên'" style="background-image: url('assets/images/bg_ctv.jpg');">
+    <div class="menu-bottom">
+      <div class="fsize-10">Chào mừng CTV, <span class="fsize-11" text-uppercase><b>{{ displayName }}</b></span></div>
+      <span class="fsize-10">({{ (authService.user | async)?.email }})</span>
+    </div>
+  </ion-header> -->
+  <ion-header class="expanded bar bar-header disable-user-behavior" *ngIf="(authService.user | async)">
+    <!-- <div class="border-avatar">
+      <ion-icon name="person" class="avatar"></ion-icon>
+    </div> -->
+    <!-- <div class="menu-bottom">
+      <div class="fsize-10">Chào bạn, mời bạn <span class="fsize-11" text-uppercase tappable (tap)="openModal({charNum: 'loginTab'})"><b>đăng nhập</b></span></div>
+      <div class="fsize-10">Hoặc <span class="fsize-11" text-uppercase tappable (tap)="openModal({charNum: 'regTab'})"><b>đăng ký</b></span>, nếu chưa có tài khoản</div>
+    </div> -->
+    <ion-list class="block-user-info">
+      <ion-item class="block-user-info-header">
+        <ion-avatar item-start>
+          <img src="assets/icon/icon-round.png">
+        </ion-avatar>
+        <!-- <h2>Finn</h2> -->
+        <h3>Xin chào, <b>{{ displayName }}</b></h3>
+        <p>({{ (authService.user | async)?.email }})</p>
+      </ion-item>
+      <ion-item  class="block-user-info-content no-padding">
+        <h3 text-center text-uppercase >Bạn là  <b class="red">{{typeUser}}</b> & Đang có
+        <br> 
+          <b *ngIf="xu <= 1000" class="big-price">{{xu + xu2}}</b> 
+          <b *ngIf="xu > 1000" class="big-price">{{xu + xu2 | number:"3.0-5"}}</b> Xu
+        </h3>
+      </ion-item>
+      <ion-item  class="block-user-info-footer" text-center>
+        <button class="btn-red" tappable (tap)="payXu()" >NẠP XU</button>
+        <button class="btn-white" disabled tappable (tap)="withDraw()" >RÚT TIỀN MẶT</button>
+        <button class="btn-white round" tappable (tap)="infoXu()">?</button>
+      </ion-item>
+    </ion-list>
+  </ion-header>
+  <ion-header class="expanded bar bar-header disable-user-behavior" *ngIf="!(authService.user | async)">
+    <!-- <div class="border-avatar">
+      <ion-icon name="person" class="avatar"></ion-icon>
+    </div> -->
+    <!-- <div class="menu-bottom">
+      <div class="fsize-10">Chào bạn, mời bạn <span class="fsize-11" text-uppercase tappable (tap)="openModal({charNum: 'loginTab'})"><b>đăng nhập</b></span></div>
+      <div class="fsize-10">Hoặc <span class="fsize-11" text-uppercase tappable (tap)="openModal({charNum: 'regTab'})"><b>đăng ký</b></span>, nếu chưa có tài khoản</div>
+    </div> -->
+    <ion-list class="block-user-info">
+      <ion-item class="block-user-info-header" no-lines>
+        <ion-avatar item-start>
+          <img src="assets/icon/icon-round.png">
+        </ion-avatar>
+        <!-- <h2>Finn</h2> -->
+        <h3>Xin chào, <b>Quý khách</b>!</h3>
+        <!-- <p>I've had a pretty messed up day. If we just...</p> -->
+      </ion-item>
+      <ion-item  class="block-user-info-content" no-lines>
+        <h3 text-center >Xin vui lòng <b tappable (tap)="openModal({charNum: 'loginTab'})">Đăng nhập</b>, hoặc <b tappable (tap)="openModal({charNum: 'regTab'})">Đăng ký</b>
+        <br> Để sử dụng đầy đủ chức năng ứng dụng
+        </h3>
+      </ion-item>
+    </ion-list>
+  </ion-header>
+  <ion-content>
+    <ion-list class="side-right">
+      <!-- <ion-item menuClose ion-item tappable (tap)="openHome()" no-padding>
+        <span>Trang chủ</span>
+        <div class="circle-icon blue-light">
+          <ion-icon ios="ios-home" md="md-home" float-right></ion-icon>
+        </div>
+      </ion-item> -->
+      <ion-item menuClose tappable (tap)="openModal({charNum: 'loginTab'})" *ngIf="!(authService.user | async)" no-padding>
+        <span>Đăng nhập</span>
+        <div class="circle-icon blue-dark">
+          <ion-icon ios="ios-log-in" md="md-log-in" float-right></ion-icon>
+        </div>
+      </ion-item>
+      <ion-item menuClose tappable (tap)="openModal({charNum: 'regTab'})" *ngIf="!(authService.user | async)" no-padding>
+        <span>Đăng ký</span>
+        <div class="circle-icon orange-1">
+          <ion-icon ios="ios-add-circle-outline" md="md-add-circle" float-right></ion-icon>
+        </div>
+      </ion-item>
+      <ion-item menuClose tappable (tap)="gotoAccount()" *ngIf="authService.user | async" no-padding>
+        <span>Tài khoản của tôi</span>
+        <div class="circle-icon green-1">
+          <ion-icon name="contact" float-right></ion-icon>
+        </div>
+      </ion-item>
+      <ion-item menuClose no-padding tappable (tap)="checkLogin({charNum: 'loginTab'})">
+        <span>Đơn hàng</span>
+        <div class="circle-icon blue-dark">
+          <ion-icon ios="ios-albums" md="md-albums" float-right></ion-icon>
+        </div>
+      </ion-item>
+      <ion-item menuClose tappable (tap)="gotoPage('OtherPage', 2)" no-padding>
+        <span>Sản phẩm yêu thích</span>
+        <div class="circle-icon red-1">
+          <ion-icon ios="ios-heart" md="md-heart" float-right class="fsize-19"></ion-icon>
+        </div>
+      </ion-item>
+      <ion-item menuClose tappable (tap)="gotoPage('OtherPage', 1)" no-padding>
+        <span>Sản phẩm đã xem</span>
+        <div class="circle-icon blue-2">
+          <ion-icon ios="ios-time-outline" md="md-time" float-right></ion-icon>
+        </div>
+      </ion-item>
+      <ion-item menuClose tappable (tap)="gotoCommission()" no-padding>
+        <span>Hoa hồng</span>
+        <div class="circle-icon orange-1">
+          <ion-icon ios="ios-flower" md="md-flower" float-right></ion-icon>
+        </div>
+      </ion-item>
+      <ion-item menuClose ion-item *ngFor="let p of pagesOther" tappable (tap)="openPage(p)" no-padding>
+        <span>{{p.title}}</span>
+        <div class="circle-icon {{p.color}}">
+          <ion-icon ios="ios-{{p.icon}}" md="md-{{p.icon}}" float-right></ion-icon>
+        </div>
+      </ion-item>
+      <ion-item menuClose tappable (tap)="logout()" *ngIf="(authService.user | async)" no-padding>
+        <span>Đăng xuất</span>
+        <div class="circle-icon blue-dark">
+          <ion-icon ios="ios-log-in" md="md-log-in" float-right></ion-icon>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav>

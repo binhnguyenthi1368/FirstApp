@@ -1,0 +1,76 @@
+// {
+//   "home":
+//   {
+//     "collection_1":
+//     {
+//       "show": true,
+//       "id": "",
+//       "title": "",
+//       "limit": ""
+//     },
+//     "collection_2":
+//     {
+//       "show": true,
+//       "id": "",
+//       "title": "",
+//       "limit": ""
+//     },
+//     "collection_3":
+//     {
+//       "show": true,
+//       "id": "",
+//       "title": "",
+//       "limit": ""
+//     },
+//     "collection_4":
+//     {
+//       "show": true,
+//       "id": "",
+//       "title": "",
+//       "limit": ""
+//     },
+//     "collection_5":
+//     {
+//       "show": true,
+//       "id": "",
+//       "title": "",
+//       "limit": ""
+//     },
+//   },
+//   "collection":
+//   {
+//    "pagination": "12",
+//    "img_banner": "",
+//    "link_banner": ""
+//   },
+//   "product":
+//   {
+//    "show_seenProduct": true,
+//    "title_seenProduct": "Sản phẩm đã xem",
+//    "show_relatedProduct": true,
+//    "title_relatedProduct": "Sản phẩm cùng nhà sản xuất",
+//   }
+// }
+
+{
+  "home_collection_show_1": false,
+  "home_collection_id_1": 1,
+  "home_collection_title_1": "Gia dụng",
+  "home_collection_limit_1": 2,
+  "home_collection_show_2": true,
+  "home_collection_id_2": 1,
+  "home_collection_title_2": "Mẹ và bé",
+  "home_collection_limit_2": 2,
+  "home_collection_show_3": true,
+  "home_collection_id_3": 1,
+  "home_collection_title_3": "Điện lạnh",
+  "home_collection_limit_3": 2,
+  "home_collection_show_4": true,
+  "home_collection_id_4": 1,
+  "home_collection_title_4": "Thời trang",
+  "home_collection_limit_4": 2,
+  "home_collection_show_5": true,
+  "home_collection_id_5": 1,
+  "home_collection_title_5": "Khuyến mãi",
+  "home_collection_limit_5": 2,
+}

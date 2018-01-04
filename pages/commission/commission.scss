@@ -1,0 +1,396 @@
+page-commission {
+  // .toolbar ion-title.title-pad,
+  // .toolbar-md ion-title.title-pad,
+  // .toolbar-ios ion-title.title-pad {
+  //   padding: 0;
+  // }
+  ion-datetime {
+    opacity: 1 !important;
+  }
+  .no-has-order {
+    background-color: #fff;
+    min-height: 635px;
+    img {
+      padding: 20px 90px;
+      max-height: 250px;
+      margin: auto;
+    }
+    .noti-no-order {
+      color: #f28f58;
+      font-weight: bold;
+    }
+    p.fsize-15 {
+      color: #737373;
+    }
+  } // .order-segment.segment-button  {
+  //   color: #aaaaaa;
+  //   border: none;
+  //   background: #fff;
+  //   border-bottom: 2px solid #aaaaaa;
+  //   font-weight: bold;
+  //   height: 3.8rem;
+  //   line-height: 3.8rem;
+  //   &:first-of-type, &:last-of-type {
+  //     border-top-left-radius: 0px;
+  //     border-top-right-radius: 0;
+  //     border-bottom-right-radius: 0;
+  //     border-bottom-left-radius: 0px;
+  //   }
+  //   &.segment-activated {
+  //     background: #fff;
+  //     color: color($colors, dogo-primary);;
+  //     border-bottom: 2px solid color($colors, dogo-primary);;
+  //   }
+  // }
+  .qr-img {
+    background: #fff;
+    margin-bottom: 3px;
+    img {
+      width: 50%;
+    }
+  }
+  .qr-text {
+    background: #fff;
+    margin-bottom: 3px;
+    .item-inner {
+      background: #fff;
+      padding-left: 16px;
+      border-bottom: unset !important;
+      ion-input {
+        font-weight: bold;
+        font-size: 18px;
+      }
+    }
+  }
+  .share {
+    background: #fff;
+    font-size: 16px;
+  }
+  .fb-share {
+    border-radius: 50%;
+    padding: 22px 13px;
+    font-size: 20px;
+    &.button-ios {
+      padding: 11px 13px;
+      height: auto !important;
+    }
+  }
+  .gg-share {
+    border-radius: 50%;
+    padding: 22px 11px;
+    font-size: 20px;
+    &.button-ios {
+      padding: 11px;
+      height: auto !important;
+    }
+  }
+  .copy-qr {
+    font-size: 11px;
+    height: 3.2rem;
+  }
+  .order-bg {
+    background: #fff;
+    margin-bottom: 3px;
+    padding: 8px 12px;
+    .infor-item {
+      .item-title {
+        padding-bottom: 0;
+        font-size: 14px;
+      }
+      .item-variant {
+        font-size: 12px;
+        color: #908f8f;
+      }
+      .product__price {
+        font-size: 12px;
+      }
+    }
+    .count-item {
+      font-size: 12px;
+      color: #adacac;
+    }
+    p {
+      display: inline;
+      font-size: 12px;
+    }
+    .blue-dogo {
+      color: color($colors, dogo-primary);
+      &.total {
+        font-size: 14px;
+      }
+    }
+    img {
+      max-height: 64px;
+    }
+  } // statistics
+  .statistic-bg {
+    background: #fff;
+    box-shadow: 0px 0px 1px 1px #ccc;
+  }
+  .header-statistic {
+    line-height: 40px;
+    color: #fff;
+    background: #ed1c24;
+    font-weight: bold !important;
+    font-weight: 300;
+    text-shadow: 0 0 0 #797979;
+    font-size: 14px;
+    padding: 0 5px;
+  }
+  b {
+    display: block;
+    border-radius: 5px 5px 5px 5px;
+    height: 10px;
+    margin-right: 7px;
+    margin-top: 10px;
+    width: 10px;
+  }
+  .icon-gf {
+    display: block;
+    border-radius: 5px 5px 5px 5px;
+    height: 10px;
+    margin-right: 7px;
+    margin-top: 0;
+    width: 10px;
+  }
+  a {
+    font-size: 12px;
+    margin-right: 6px;
+    text-decoration: underline;
+  }
+  .title-statistic {
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 0;
+    line-height: 30px;
+    font-size: 12px;
+  }
+  .list-choice {
+    background-color: #fff !important;
+    width: 100%; // ion-label, .label {
+    //  overflow: unset !important;
+    // }
+    .item-inner {
+      //  // background-position: right center !important;
+      background-color: #fff !important;
+    }
+    .circle-icon {
+      display: inline-block;
+      padding: 5px 6px 3px 6px !important;
+      border-radius: 50%;
+      float: left;
+      margin-right: 10px;
+      ion-icon {
+        color: #fff;
+        font-size: 20px;
+        padding-right: 0;
+      }
+    }
+    ion-item {
+      border-bottom: 0.55px solid #c8c7cc;
+      ion-label {
+        padding-left: 16px;
+        font-size: 14px !important;
+        margin-bottom: 0 !important;
+        color: #000 !important;
+      }
+      ion-input {
+        padding-left: 16px;
+        font-size: 12px;
+        color: #999;
+      }
+    }
+    ion-item.large {
+      border-bottom: 1.55px solid #c8c7cc;
+    }
+    p {
+      margin-top: 7px;
+      color: #000;
+    }
+  }
+  .btn-cart {
+    font-size: 11px;
+    height: 3.3rem;
+  }
+  .itemLine__price {
+    font-size: 14px;
+    color: $dg-price-color;
+  }
+  .qty-num {
+    display: inline-block;
+    width: 160px;
+    border: 1px solid #dedede;
+    line-height: 32px;
+    /* padding-top: 5px; */
+    /* top: 3px; */
+    /* padding: 0px 0px 5px 0px; */
+    // padding-left: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+  .qty-minus {
+    border-right: 1px solid #dedede;
+    display: inline-block;
+    color: #c0c0c0;
+    position: absolute;
+    top: 0;
+    left: 3px;
+    padding: 0 12px;
+    height: 36px;
+    width: 40px;
+  }
+  .qty-plus {
+    border-left: 1px solid #dedede;
+    display: inline-block;
+    color: #c0c0c0;
+    position: absolute;
+    // right: 0;
+    top: 0;
+    padding: 0 12px;
+    height: 36px;
+    width: 40px;
+    left: 123px;
+
+  }
+}
+
+.novflow {
+  text-overflow: none;
+}
+
+.list-item-cart {
+  // box-shadow: 0px 1px 2px 0px #ccc7c7;
+  margin-bottom: 130px;
+  .bg-white {
+    padding: 0 12px;
+    border-bottom: 2px solid #ededed;
+    &.item-block:first-child {
+      border-top: none !important;
+    }
+    .checkbox-icon {
+      border-width: 1px !important;
+    }
+    .item-inner {
+      background-color: #fff;
+      border-bottom: none !important;
+      padding-right: 0 !important;
+    }
+    ion-icon {
+      font-size: 20px;
+    }
+    ion-toggle {
+      padding-right: 5px !important;
+      padding-left: 0 !important;
+    }
+    &.item-checkbox {
+      ion-checkbox {
+        margin: 9px 0px !important;
+      }
+      ion-label {}
+      .item-inner {
+        padding: 0 !important;
+      }
+    }
+  }
+  .item-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-bottom: 0;
+  }
+}
+
+
+
+
+.bt-cart {
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  box-shadow: 1px -2px 3px 0px #ccc7c7;
+  width: 100%;
+  .border-bt {
+    border-bottom: 1px solid #d4d4d4;
+    .num-coin {
+      text-overflow: unset !important;
+    }
+    .toggle.toggle-ios {
+      .toggle-icon {
+        width: 80%;
+        height: 60%;
+        float: right;
+        .toggle-inner {
+          width: 15px;
+          height: 15px;
+        }
+      }
+      &.toggle-checked {
+        .toggle-inner {
+          left: 3.5px;
+          top: 0.5px;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+}
+
+.pd-cart {
+  padding: 0 6px;
+  p.fsize-12 {
+    min-width: 120px;
+  }
+  .bg-white.item-block {
+    border-bottom: none;
+    border-top: none;
+  }
+  .item-inner {
+    background-color: #fff;
+    border-bottom: none !important;
+    padding-right: 0 !important;
+  }
+  ion-icon {
+    font-size: 18px;
+    padding-right: 5px;
+  }
+  ion-toggle {
+    padding-right: 5px !important;
+    padding-left: 0px !important;
+  }
+  .item-checkbox {
+    ion-checkbox {
+      margin: 9px 5px 9px 0px !important;
+    }
+    ion-label {}
+    .item-inner {
+      padding: 0 !important;
+    }
+  }
+}
+
+// view hoa hong
+.gift-inner {
+  position: relative;
+  overflow-x: auto;
+  min-height: .01%;
+  .show-detail {
+    height: 75px;
+    overflow: hidden;
+  }
+  .bg-top-more {
+    height: 46px;
+    content: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#dcdcde), color-stop(0.2, #e7e7ec), to(rgba(255, 255, 255, 0)));
+    margin-top: -45px;
+  }
+  .show-more {
+    text-align: center;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}

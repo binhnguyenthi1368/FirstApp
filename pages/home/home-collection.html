@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar class="header-back" color="dogo-primary">
+    <ion-title class="title-pad" text-uppercase>{{titleCollection}}</ion-title>
+    <ion-buttons end>
+      <button ion-button tappable (tap)="goSearch()">
+        <ion-icon ios="ios-search" md="md-search"></ion-icon>
+      </button>
+      <button ion-button tappable (tap)="gotoCart()">
+        <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+        <ion-badge>{{qtyItemCart}}</ion-badge>
+      </button>
+      <button ion-button tappable (tap)="dropdownPopover()">
+        <ion-icon ios="ios-more" md="md-more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="home-collection">
+    <!--các nhóm sp cấp 2-->
+    <ion-row class="horizontal-container-1">
+      <ion-col col-6 *ngFor="let collection of selectedCollection; let indexCol = index" class="horizontal">
+        <div class="horizontal-item" tappable (tap)="openCollection($event, collection.handle, collection.title)">
+          <a class="item-col">
+            <img *ngIf="collection.image != ''" src="{{collection.image}}">
+            <img *ngIf="collection.image == ''" src="assets/images/no-image-menu.png">
+            <span class="transit" text-uppercase>{{collection.title}}</span>
+          </a>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,216 @@
+page-cart {
+  // .toolbar ion-title.title-pad,
+  // .toolbar-md ion-title.title-pad,
+  // .toolbar-ios ion-title.title-pad {
+  //   // padding: 0;
+  // }
+  .no-has-order {
+    background-color: #fff;
+    min-height: 635px;
+    position: absolute;
+    height: 100%;
+    img {
+      padding: 20px 90px;
+      max-height: 250px;
+      margin: auto;
+    }
+    .noti-no-order {
+      color: #f28f58;
+      font-weight: bold;
+    }
+    p.fsize-15 {
+      color: #737373;
+    }
+  }
+  .order-bg {
+    background: #fff;
+    margin-bottom: 3px;
+    padding: 8px 12px;
+    .infor-item {
+      .item-title {
+        padding-bottom: 0;
+        font-size: 14px;
+      }
+      .item-variant {
+        font-size: 12px;
+        color: #908f8f;
+      }
+      .product__price {
+        font-size: 12px;
+      }
+    }
+    .count-item {
+      font-size: 12px;
+      color: #adacac;
+    }
+    p {
+      display: inline;
+      font-size: 12px;
+    }
+    .blue-dogo {
+      color: color($colors, dogo-primary);
+      &.total {
+        font-size: 14px;
+      }
+    }
+    img {
+      max-height: 64px;
+    }
+  }
+  .list-item-cart {
+    // box-shadow: 0px 1px 2px 0px #ccc7c7;
+    margin-bottom: 0;
+    .bg-white {
+      padding: 0 12px;
+      border-bottom: 2px solid #ededed;
+      &.item-block:first-child {
+        border-top: none !important;
+      }
+      .checkbox-icon {
+        border-width: 1px !important;
+      }
+      .item-inner {
+        background-color: #fff;
+        border-bottom: none !important;
+        padding-right: 0 !important;
+      }
+      ion-icon {
+        font-size: 20px;
+      }
+      ion-toggle {
+        padding-right: 5px !important;
+        padding-left: 0 !important;
+      }
+      &.item-checkbox {
+        ion-checkbox {
+          margin: 9px 8px 9px 0 !important;
+        }
+        ion-label {}
+        .item-inner {
+          padding: 0 !important;
+        }
+      }
+    }
+    .item-title {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding-bottom: 0;
+    }
+  }
+  .btn-cart {
+    font-size: 11px;
+    height: 3.3rem;
+  }
+  .itemLine__price {
+    font-size: 14px;
+    color: $dg-price-color;
+  }
+  .qty-num {
+    display: inline-block;
+    width: 160px;
+    border: 1px solid #dedede;
+    line-height: 32px;
+    /* padding-top: 5px; */
+    /* top: 3px; */
+    /* padding: 0px 0px 5px 0px; */
+    // padding-left: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+  .qty-minus {
+    border-right: 1px solid #dedede;
+    display: inline-block;
+    color: #c0c0c0;
+    position: absolute;
+    top: 0;
+    left: 3px;
+    padding: 0 12px;
+    height: 36px;
+    width: 40px;
+  }
+  .qty-plus {
+    border-left: 1px solid #dedede;
+    display: inline-block;
+    color: #c0c0c0;
+    position: absolute; // right: 0;
+    top: 0;
+    padding: 0 12px;
+    height: 36px;
+    width: 40px;
+    left: 123px;
+  }
+  .bt-cart {
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    box-shadow: 1px -2px 3px 0px #ccc7c7;
+    width: 100%;
+    .border-bt {
+      border-bottom: 1px solid #d4d4d4;
+      padding-right: 3px;
+      ion-icon {
+        font-size: 18px;
+        padding-left: 8px;
+        padding-right: 4px;
+      }
+      .num-coin {
+        text-overflow: none !important;
+      }
+      .toggle.toggle-ios {
+        .toggle-icon {
+          width: 80%;
+          height: 60%;
+          float: right;
+          .toggle-inner {
+            width: 15px;
+            height: 15px;
+          }
+        }
+        &.toggle-checked {
+          .toggle-inner {
+            left: 3.5px;
+            top: 0.5px;
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+    }
+  }
+  .pd-cart {
+    padding: 0;
+    p.fsize-12 {
+      min-width: 120px;
+    }
+    .bg-white.item-block {
+      border-bottom: none;
+      border-top: none;
+    }
+    .item-inner {
+      background-color: #fff;
+      border-bottom: none !important;
+      padding-right: 0 !important;
+    }
+    ion-icon {
+      font-size: 18px;
+      padding-right: 5px;
+    }
+    ion-toggle {
+      padding-right: 5px !important;
+      padding-left: 0px !important;
+    }
+    .item-checkbox {
+      ion-checkbox {
+        margin: 9px 5px 9px 0px !important;
+      }
+      ion-label {}
+      .item-inner {
+        padding: 0 !important;
+      }
+    }
+  }
+  .novflow {
+    text-overflow: none;
+  }
+}

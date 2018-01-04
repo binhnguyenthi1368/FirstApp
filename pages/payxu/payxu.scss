@@ -1,0 +1,22 @@
+page-payxu {
+  .list-avatar-page {
+    ion-note {
+      font-size: 12px;
+      align-self: flex-start;
+      margin-top: 14px;
+    }
+    img {
+      border: 1px solid #dedede;
+    }
+    ion-item {
+      background: #fff;
+    }
+    .item [item-end] {
+      margin: auto;
+      padding-right: 8px;
+      color: #e60f1e;
+      font-size: 13px;
+      font-weight: bold;
+    }
+  }
+}

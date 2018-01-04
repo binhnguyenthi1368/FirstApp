@@ -1,0 +1,297 @@
+<!-- <ion-header color="primary">
+  <ion-toolbar>
+    <ion-title text-uppercase class="title-modal">
+      Đăng nhập / Đăng ký
+    </ion-title>
+    <ion-buttons start class="no-st">
+      <button ion-button tappable (tap)="dismiss()" class="fsize-24" padding-horizontal>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <button ion-button>
+        <ion-icon class="fsize-22" name="close" tappable (tap)="dismiss()" padding-horizontal ></ion-icon>  
+      </button>
+      <button ion-button disabled>
+        Đăng nhập / Đăng ký
+      </button>
+    </ion-title>
+  </ion-navbar>
+  <ion-segment [(ngModel)]="tabAcc">
+    <ion-segment-button class="acc-segment" value="loginTab" text-uppercase>
+      đăng nhập
+    </ion-segment-button>
+    <ion-segment-button class="acc-segment" value="regTab" text-uppercase>
+      đăng ký
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content>
+  <ng-container [ngSwitch]="tabAcc">
+    <ion-list *ngSwitchCase="'loginTab'">
+      <ion-item no-padding>
+        <ion-thumbnail item-start class="full">
+          <!-- <h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.email }}!</h1>
+        <button tappable (tap)="logout()" *ngIf="authService.user | async">
+          Đăng xuất
+        </button> -->
+          <form #loginForm="ngForm" novalidate>
+            <ion-list>
+              <ion-item>
+                <ion-label floating>Địa chỉ email</ion-label>
+                <ion-input [(ngModel)]="login.email" name="email" type="email" email="true" spellcheck="false" autocapitalize="off" #emailLog="ngModel" required clearInput>
+                </ion-input>
+              </ion-item>
+              <p ion-text [hidden]="emailLog.valid || !submitted1" color="danger" padding-left>
+                Địa chỉ email không hợp lệ!
+              </p>
+              <ion-item>
+                <ion-label floating>Mật khẩu</ion-label>
+                <ion-input [(ngModel)]="login.password" name="password" minlength="6" type="{{type}}" #passLog="ngModel" required>
+                </ion-input>
+                <button ion-button item-right clear class="fs-eye" tappable (tap)="showPassword()">
+                  <ion-icon ios="ios-{{iconPass}}" md="md-{{iconPass}}"></ion-icon>
+                </button>
+              </ion-item>
+              <p ion-text [hidden]="passLog.valid || !submitted1" color="danger" padding-left>
+                Mật khẩu không hợp lệ!
+              </p>
+            </ion-list>
+            <p ion-text color="danger" padding-left>
+              <b>{{stateActive}} </b>
+            </p>
+            <ion-row>
+              <ion-col class="fget-pas" text-right padding-bottom>
+                <a (tap)="resetPassWord()">Quên mật khẩu?</a>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12 padding-left>
+                <button ion-button tappable (tap)="loginFirebase(loginForm)" [disabled]="!login.email || !login.password" full text-uppercase [disabled]="">Đăng nhập</button>
+              </ion-col>
+            </ion-row>
+          </form>
+          <!-- <ion-row>
+            <ion-col col-12 text-center padding-vertical>
+              <b>Hoặc đăng nhập bằng</b>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-10 offset-1 text-center>
+              <button ion-button block text-uppercase icon-left tappable (tap)="loginGoogle()" class="btn-social-gg">
+                <ion-icon name="logo-google"></ion-icon> Tài khoản google</button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-10 offset-1 text-center>
+              <button ion-button block text-uppercase icon-left tappable (tap)="loginFacebook()" class="btn-social-fb">
+                <ion-icon name="logo-facebook"></ion-icon> Tài khoản facebook</button>
+            </ion-col>
+          </ion-row> -->
+        </ion-thumbnail>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'regTab'">
+      <ion-item no-padding>
+        <ion-thumbnail item-start class="full">
+          <form #signupForm="ngForm" novalidate>
+            <ion-list>
+              <ion-item>
+                <ion-label floating>Họ tên đầy đủ</ion-label>
+                <ion-input [(ngModel)]="signup.first_name" name="first_name" type="text" value="nguyen binh" minlength="3" #fullname="ngModel" spellcheck="false" autocapitalize="off" required clearInput>
+                </ion-input>
+              </ion-item>
+              <!-- <p ion-text *ngIf="fullname.errors && (fullname.dirty || fullname.touched) || !submitted2" color="danger" padding-left>
+                Mục này còn thiếu
+              </p>
+              <p ion-text *ngIf="fullname.valid && (fullname.dirty || fullname.touched) || !submitted2" color="danger" padding-left>
+                Mục này còn thiếu 1
+              </p> -->
+              <p ion-text [hidden]="fullname.valid || !submitted2" color="danger" padding-left>
+                Mục này còn thiếu
+              </p>
+              <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input [(ngModel)]="signup.email" name="email" email="true" value="summer.rain1368@gmail.com" type="email" #email="ngModel" spellcheck="false" autocapitalize="off" required clearInput>
+                </ion-input>
+              </ion-item>
+              <p ion-text [hidden]="email.valid || !submitted2" color="danger" padding-left>
+                Địa chỉ email không hợp lệ!
+              </p>
+              <ion-item padding-bottom>
+                <ion-label floating>Số điện thoại</ion-label>
+                <ion-input [(ngModel)]="signup.phone" name="phone" type="number" value="" minlength="10" maxlength="11" #phone="ngModel" spellcheck="false" autocapitalize="off" required clearInput>
+                </ion-input>
+              </ion-item>
+              <p ion-text [hidden]="phone.valid || !submitted2" color="danger" padding-left>
+                Số điện thoại không hợp lệ!
+              </p>
+
+              <ion-item padding-bottom>
+                <ion-label floating>Ngày sinh</ion-label>
+                <ion-datetime min="1940" max="2008" displayFormat="MM/DD/YYYY" [(ngModel)]="signup.birthday" name="birthday" type="text" value="" #birthday="ngModel" spellcheck="false" autocapitalize="off" clearInput>
+                </ion-datetime>
+              </ion-item>
+
+              <ion-item padding-bottom>
+                <ion-label floating>Địa chỉ</ion-label>
+                <ion-input [(ngModel)]="signup.address" name="address" type="text" value="" #address="ngModel" spellcheck="false" autocapitalize="off" clearInput>
+                </ion-input>
+              </ion-item>
+
+              <ion-item padding-bottom>
+                <ion-label floating>Giới tính</ion-label>
+                <ion-select [(ngModel)]="signup.gender" name="gender" interface="action-sheet">
+                  <ion-option value="1">Nam</ion-option>
+                  <ion-option value="0">Nữ</ion-option>
+                </ion-select>
+              </ion-item>
+              
+              <!-- <p ion-text [hidden]="!submitted2 || !phoneVali || phone.valid" color="danger" padding-left>
+                Số điện thoại đã được sử dụng bởi tài khoản khác. {{submitted2}}{{phoneVali}}
+              </p> -->
+              <ion-item padding-top>
+                <ion-label floating>Mật khẩu</ion-label>
+                <ion-input [(ngModel)]="signup.password" name="password" type="{{type}}" value="112358xx" minlength="6" #password="ngModel" clearInput required>
+                </ion-input>
+                <button ion-button item-right clear class="fs-eye" tappable (tap)="showPassword()">
+                  <ion-icon ios="ios-{{iconPass}}" md="md-{{iconPass}}"></ion-icon>
+                </button>
+              </ion-item>
+              <p ion-text [hidden]="password.valid || !submitted2" color="danger" padding-left>
+                Mật khẩu không hợp lệ!
+              </p>
+              <p ion-text padding>
+                Mật khẩu phải bao gồm ít nhất 6 ký tự
+              </p>
+              <ion-item padding-bottom>
+                <ion-label floating>Nhập lại mật khẩu</ion-label>
+                <ion-input [(ngModel)]="signup.password_confirmation" value="112358xx" name="password_confirmation" type="{{type}}" minlength="6" #password_confirmation="ngModel" clearInput required>
+                </ion-input>
+                <button ion-button item-right clear class="fs-eye" tappable (tap)="showPassword()">
+                  <ion-icon ios="ios-{{iconPass}}" md="md-{{iconPass}}"></ion-icon>
+                </button>
+              </ion-item>
+              <p ion-text [hidden]="(password_confirmation.value == password.value || password_confirmation.value == '' || password_confirmation.value == null) && password_confirmation.valid || !submitted2" color="danger" padding-left>
+                Mật khẩu nhập lại không đúng!
+              </p>
+              <!-- <p ion-text [hidden]="repassword.valid || !submitted2" color="danger" padding-left>
+                Mật khẩu nhập lại không đúng!
+              </p> -->
+              <ion-item padding-top>
+                <ion-label floating text-uppercase>mã giới thiệu</ion-label>
+                <ion-input [(ngModel)]="signup.invited_code" name="invited_code" type="text" #invited_code="ngModel" spellcheck="false" autocapitalize="off" minlength="10" maxlength="11" required clearInput>
+                </ion-input>
+              </ion-item>
+              <p ion-text [hidden]="invited_code.valid || !submitted2" color="danger" padding-left>
+                Mã giới thiệu không hợp lệ!
+              </p>
+              <!-- <p ion-text [hidden]="codeVali || !submitted2 || invited_code.invalid" color="danger" padding-left>
+                Mã giới thiệu không thuộc bất kỳ tài khoản nào.
+              </p> -->
+              <p ion-text padding>
+                Mã giới thiệu được tạo ra bởi thành viên chính thức
+              </p>
+              <ion-item padding-vertical class="border-bt-no">
+                <ion-label>Tôi muốn nhận các tin khuyến mại qua email</ion-label>
+                <ion-toggle [(ngModel)]="signup.accepts_marketing" name="accepts_marketing" checked="true"></ion-toggle>
+              </ion-item>
+              <ion-item padding-vertical class="border-bt-no">
+                <ion-label>Tôi muốn trở thành [tổng đại lý, đại lý]</ion-label>
+                <ion-toggle [(ngModel)]="signup.accepts_agency" name="accepts_agency" checked="false"></ion-toggle>
+              </ion-item>
+              <ion-item class="border-bt-no">
+                <ion-label tappable (tap)="openPolicy()" no-margin>
+                  Tôi đã đọc và hiểu rõ các <a >điều khoản và chính sách bảo mật</a> của hệ thống Dogo Apps
+                </ion-label>
+                <ion-checkbox class="hideCover" color="royal" [(ngModel)]="agreed" name="agreed"  checked="false" #readedPolicy></ion-checkbox>
+              </ion-item>
+            </ion-list>
+            <p ion-text color="danger" padding-left>
+              <b>{{stateActive}} </b>
+            </p>
+            <!-- <ion-row padding-bottom>
+              <ion-col col-12 text-center padding-top>
+                <p padding-left>Tôi đã đọc và hiểu rõ các <a tappable (tap)="openPolicy()">điều khoản và chính sách bảo mật</a> của hệ thống Dogo Apps</p>
+              </ion-col>
+            </ion-row> -->
+            <ion-row>
+              <ion-col col-12 padding-left>
+                <button ion-button tappable (tap)="signupFirebase(signupForm, readedPolicy.checked)" type="submit" full text-uppercase [disabled]="doAgreed()">Đăng ký ngay</button>
+              </ion-col>
+            </ion-row>
+          </form>
+          <!-- <ion-row>
+            <ion-col col-12 text-center padding-vertical>
+              <b>Hoặc đăng ký bằng</b>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-10 offset-1 text-center>
+              <button ion-button block text-uppercase icon-left tappable (tap)="loginGoogle()" class="btn-social-gg">
+                <ion-icon name="logo-google"></ion-icon> Tài khoản google</button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-10 offset-1 text-center>
+              <button ion-button block text-uppercase icon-left tappable (tap)="loginFacebook()" class="btn-social-fb">
+                <ion-icon name="logo-facebook"></ion-icon> Tài khoản facebook</button>
+            </ion-col>
+          </ion-row> -->
+        </ion-thumbnail>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+</ion-content>
+<!-- loading -->
+<ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="isLoading">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+  </div>
+</ion-loading>

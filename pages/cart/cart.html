@@ -1,0 +1,151 @@
+<!--
+  Generated template for the CartPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar class="header-back">
+    <ion-title>Giỏ hàng</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content no-padding>
+  <!-- Giỏ hàng -->
+  <ion-grid no-padding>
+    <!-- neu chua co sp nao thi hien diao dien mac dinh -->
+    <ion-row class="no-has-order" padding text-center *ngIf="itemCarts?.length < 1 || itemCarts == null">
+      <img src="assets/images/no-has-order.png">
+      <ion-col col-12 text-center>
+        <p class="noti-no-order fsize-14">Chưa có sản phẩm nào trong giỏ hàng</p>
+        <p class="fsize-12">Trở lại để tiếp tục mua sắm</p>
+      </ion-col>
+    </ion-row>
+    <ion-row class="order-bg" *ngIf="itemCarts?.length > 0 && itemCarts != null">
+      <ion-col col-1 no-padding>
+        <ion-icon name="pricetags" item-start></ion-icon>
+      </ion-col>
+      <ion-col col-6 no-padding>
+        Danh sách sản phẩm
+      </ion-col>
+      <ion-col col-5 no-padding text-right>
+        <a tappable (tap)="removeAll()"><u>Xóa tất cả</u></a>
+      </ion-col>
+    </ion-row>
+    <ion-list class="list-item-cart" *ngIf="itemCarts?.length > 0 && itemCarts != null">
+      <ion-item-sliding *ngFor="let itemCart of itemCarts; let i = index" no-padding>
+        <ion-item class="bg-white">
+          <ion-label no-margin>
+            <ion-row no-padding align-items-center>
+              <ion-col col-2 no-padding>
+                <img src="{{itemCart.images}}" tappable (tap)="productTapped($event, itemCart.handle)">
+              </ion-col>
+              <ion-col col-10 class="infor-item">
+                <ion-row>
+                  <ion-col col-12 class="item-title" tappable (tap)="productTapped($event, itemCart.handle)">
+                    {{itemCart.title}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-12 class="item-variant" *ngIf="itemCart.variant.option1 != 'Default Title' && itemCart.variant.option2 != '' && itemCart.variant.option3 != ''">
+                    Loại hàng: 
+                    <span *ngIf="itemCart.variant.option1 == null || itemCart.variant.option1 == ''">{{itemCart.variant.option1}} </span>
+                    <span *ngIf="itemCart.variant.option2 != null && itemCart.variant.option2 != ''">{{itemCart.variant.option2}} </span>
+                    <span *ngIf="itemCart.variant.option3 != null && itemCart.variant.option3 != ''">/ {{itemCart.variant.option3}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row align-items-center>
+                  <ion-col col-9>
+                    <!-- <ion-input type="number" class="qty-num" value="1" min="1"></ion-input> -->
+                    <button ion-button clear class="qty-minus" tappable (tap)="doMinus(qty.value, i, itemLineCheck.checked)">
+                      <ion-icon ios="ios-remove" md="md-remove"></ion-icon>
+                    </button>
+                    <input type="number" class="qty-num" [value]="itemCart.quantity" min="1" no-padding (keyup)="changeNum(qty.value, i, itemLineCheck.checked)" #qty>
+                    <button ion-button clear class="qty-plus" tappable (tap)="doPlus(qty.value, i, itemLineCheck.checked)">
+                      <ion-icon ios="ios-add" md="md-add"></ion-icon>
+                    </button>
+                  </ion-col>
+                  <ion-col col-3 text-right>
+                    <ion-icon name="trash" tappable (tap)="removeItem(i)" color="danger"></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-12>
+                    <div class="itemLine__price" no-padding *ngIf="itemCart.variant.price > 999">
+                      <del class="compare-price" *ngIf="itemCart.variant.compare_at_price != '0'">
+                        {{itemCart.variant.compare_at_price_format}}
+                      </del>
+                      {{itemCart.variant.price * itemCart.quantity | number:'3.0-5'}}₫
+                    </div>
+                    <div class="itemLine__price" no-padding *ngIf="itemCart.variant.price < 1000">
+                      <del class="compare-price" *ngIf="itemCart.variant.compare_at_price != '0'">
+                        {{itemCart.variant.compare_at_price_format}}
+                      </del>
+                      {{itemCart.variant.price * itemCart.quantity}}₫
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+          <ion-checkbox color="royal" [checked]="itemCart.selected" [(ngModel)]="itemCart.selected" tappable (tap)="selectItem(i,itemCart.selected)" class="check-item" #itemLineCheck></ion-checkbox>
+        </ion-item>
+        <ion-item-options side="left" (ionSwipe)="removeItem(i)">
+          <button ion-button color="danger" expandable tappable (tap)="removeItem(i)">
+            <ion-icon name="trash"></ion-icon>
+            Xóa
+          </button>
+        </ion-item-options>
+        <ion-item-options side="right" (ionSwipe)="removeItem(i)">
+          <button ion-button color="danger" expandable tappable (tap)="removeItem(i)">
+            <ion-icon name="trash"></ion-icon>
+            Xóa
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+
+
+  </ion-grid>
+</ion-content>
+<ion-footer class="bt-cart">
+  <ion-row *ngIf="itemCarts?.length > 0 && itemCarts != null">
+    <ion-col col-12>
+      <ion-row align-items-center class="border-bt" *ngIf="authService.user | async">
+        <ion-col col-9 class="fsize-12">
+          <ion-icon name="cash" padding-right></ion-icon> Thưởng tích lũy doanh số
+        </ion-col>
+        <ion-col col-3 text-right *ngIf="reward_points_2 <= 0">
+          0 xu
+        </ion-col>
+        <ion-col col-3 text-right *ngIf="reward_points_2 > 999">
+          {{reward_points_2 | number:'3.0-5'}} xu
+        </ion-col>
+        <ion-col col-3 text-right *ngIf="reward_points_2 > 0 && reward_points_2 < 1000">
+          {{reward_points_2}} xu
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center class="pd-cart">
+        <ion-col col-4 class="count-item">
+          <ion-list no-margin>
+            <ion-item no-padding class="bg-white">
+              <ion-label no-margin class="fsize-12 novflow">
+                Chọn tất cả
+              </ion-label>
+              <ion-checkbox color="royal" [checked]="isSelectedAll" [(ngModel)]="isSelectedAll" class="check-all" tappable (tap)="selectAllItems(!isSelectedAll)"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+        <ion-col col-5 text-right>
+          <p class="fsize-12" no-margin>Tổng:
+            <span class="blue-dogo total fsize-13" *ngIf="total != 0">{{total | number:'3.0-5'}}₫</span>
+            <span class="blue-dogo total fsize-13" *ngIf="total == 0">0₫</span>
+          </p>
+        </ion-col>
+        <ion-col col-3 text-right no-padding>
+          <button ion-button color="danger" no-margin class="btn-cart fsize-12" tappable (tap)="callCheckOut()" [disabled]="clicked">Thanh toán</button>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-footer>

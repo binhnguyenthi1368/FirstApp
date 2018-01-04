@@ -1,0 +1,112 @@
+<!--
+  Generated template for the SearchPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <ion-searchbar placeholder="Bạn tìm gì hôm nay?" (keypress)="eventHandler($event.keyCode, $event)"></ion-searchbar>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <!-- <ion-grid class="bg-timeout" *ngIf="notiTimeout && !loadingFirst">
+    <ion-row text-center class="mg-auto">
+      <ion-col col-12 class="fsize-19" margin-top>
+        Lỗi!
+      </ion-col>
+      <ion-col col-12 margin-bottom>
+        Vui lòng kiểm tra lại kết nối!
+      </ion-col>
+      <ion-col col-12 class="fsize-30">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row name="collection products">
+      <ion-col col-6 *ngFor="let product of results">
+        <div class="pi">
+          <div class="pi__inner">
+            <div class="pi__image img-h-100" tappable (tap)="productTapped($event, product.handle)">
+              <img src="{{product.featured_image}}">
+            </div>
+            <div class="pi__info">
+              <p class="pi__title" tappable (tap)="productTapped($event, product.handle)">{{product.title}}</p>
+              <p class="pi__price" *ngIf="!product.isWholeSale">
+                {{product.price_format}}
+                <del class="compare-price" *ngIf="product.compare_at_price != 0">{{product.compare_at_price_format}}</del>
+                <span class="sale-off" *ngIf="product.sale != '-0%'">{{product.sale}}</span>
+              </p>
+              <p class="pi__price" *ngIf="!isAgencyRegular && product.isWholeSale">
+                 Tổng đại lý!
+              </p>
+              <p class="pi__price" *ngIf="isAgencyRegular && product.isWholeSale">
+                {{product.price_format}}
+                <del class="compare-price" *ngIf="product.compare_at_price != 0">{{product.compare_at_price_format}}</del>
+                <span class="sale-off" *ngIf="product.sale != '-0%'">{{product.sale}}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="no-has-result" no-padding *ngIf=" loadingFirst && notiTimeout ">
+    <ion-row no-padding text-center>
+      <img src="assets/images/no-result.png">
+      <ion-col col-12 text-center>
+        <p class="noti-no-result fsize-14">Không có sản phẩm nào phù hợp với từ khóa!</p>
+        <!-- <p class="fsize-12">Trở lại để tiếp tục mua sắm</p> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!-- loading -->
+<ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="!loadingFirst && !notiTimeout">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+  </div>
+</ion-loading>

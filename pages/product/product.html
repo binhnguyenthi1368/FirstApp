@@ -1,0 +1,318 @@
+<!-- <ion-header>
+  <ion-navbar class="primary header-back-parallax">
+    <ion-title></ion-title>
+    <ion-buttons end>
+      <button ion-button tappable class="btn-favorite-2 addFavor" (tap)="addFavorite()" [ngClass]="{'hide': !addFavor}" id="btn1">
+        <ion-icon name="heart" *ngIf="addFavor"></ion-icon>
+      </button>
+      <button ion-button tappable class="btn-favorite-2" (tap)="addFavorite()" [ngClass]="{'hide': addFavor}" id="btn2">
+        <ion-icon name="heart-outline" *ngIf="!addFavor"></ion-icon>
+      </button>
+      <button ion-button tappable (tap)="goSearch()">
+        <ion-icon ios="ios-search" md="md-search" id="btn4"></ion-icon>
+      </button>
+      <button ion-button tappable (tap)="gotoCart()">
+        <ion-icon ios="ios-cart" md="md-cart" id="btn5"></ion-icon>
+        <ion-badge>{{qtyItemCart}}</ion-badge>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+  <ion-content> -->
+
+
+<ion-content hide-header>
+    <ion-grid no-padding>
+      <ion-navbar class="header-back-parallax">
+        <ion-buttons end>
+          <button ion-button tappable class="btn-favorite-2 addFavor" (tap)="addFavorite()" [ngClass]="{'hide': !addFavor}" id="btn1">
+            <ion-icon name="heart" *ngIf="addFavor"></ion-icon>
+          </button>
+          <button ion-button tappable class="btn-favorite-2" (tap)="addFavorite()" [ngClass]="{'hide': addFavor}" id="btn2">
+            <ion-icon name="heart-outline" *ngIf="!addFavor"></ion-icon>
+          </button>
+          <button ion-button tappable>
+            <ion-icon name="share" id="btn3"></ion-icon>
+          </button>
+          <button ion-button tappable (tap)="goSearch()">
+            <ion-icon ios="ios-search" md="md-search" id="btn4"></ion-icon>
+          </button>
+          <button ion-button tappable (tap)="gotoCart()">
+            <ion-icon ios="ios-cart" md="md-cart" id="btn5"></ion-icon>
+            <ion-badge>{{qtyItemCart}}</ion-badge>
+          </button>
+        </ion-buttons>
+      </ion-navbar>
+
+
+
+
+    <!-- <div class="bg-parallax"></div> -->
+    <div class="img-parallax">
+      <div class="product__img">
+        <ion-slides pager *ngIf="loadingFirst && !notiTimeout" zoom="true">
+          <ion-slide *ngFor="let image of productDetail.images">
+            <div class="swiper-zoom-container">
+              <img src="{{image}}">
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </div>
+    </div>
+  </ion-grid>
+  <div class="main-content">
+    <ion-fab class="btn-favorite-1" right top tappable (tap)="addFavorite()" [ngClass]="{'add-favor': addFavor}">
+      <button ion-fab><ion-icon name="heart" *ngIf="addFavor"></ion-icon><ion-icon name="heart-outline" *ngIf="!addFavor"></ion-icon></button>
+    </ion-fab>
+    <ion-grid padding-horizontal class="product-overview" id="overview">
+      <h5 class="product__title" *ngIf="loadingFirst && !notiTimeout">{{productDetail.title}}</h5>
+      <div class="product__price">
+        <ion-row>
+          <ion-col col-12  no-padding *ngIf="loadingFirst && !notiTimeout">
+            <span class="price" >{{productDetail.price}}</span>
+            <del class="compare-price" *ngIf="productDetail.compare_at_price != '0₫'">{{productDetail.compare_at_price}}</del>
+            <span class="sale-off" *ngIf="productDetail.sale != '-0%' && productDetail.sale != '0%'">{{productDetail.sale}}</span>
+          </ion-col>
+          <!-- btn yeu thich -->
+          <!-- <ion-col offset-2 col-4 class="btn-favorite" tappable (tap)="addFavorite()" [ngClass]="{'add-favor': addFavor}">
+            <ion-icon name="heart-outline"></ion-icon>
+            Yêu thích
+          </ion-col> -->
+        </ion-row>
+      </div>
+      <!-- <div class="product__img">
+        <ion-slides pager *ngIf="productDetail.images.length > 0" zoom="true">
+          <ion-slide *ngFor="let image of productDetail.images">
+            <div class="swiper-zoom-container">
+              <img src="{{image}}">
+            </div>
+          </ion-slide>
+          <ion-slide>
+            <iframe [src]="video" frameborder="0" allowfullscreen width="100%" height="320px"></iframe>
+          </ion-slide>
+        </ion-slides>
+      </div> -->
+    </ion-grid>
+    <!-- so coin nhan duoc khi mua san pham -->
+    <!-- <ion-list *ngIf="loadingFirst" no-margin style="margin-top: 5px;">
+      <button class="bg-white coin-inner" ion-item>
+        <img src="assets/icon/coin.png">
+        <span>Mua và nhận 9 Dogo coin</span>
+      </button>
+    </ion-list> -->
+    <!-- Chi tiet san pham -->
+    <ion-grid id="detail">
+      <ion-row>
+        <ion-col col-12 class="ion-customer-header">
+          Mô tả sản phẩm
+        </ion-col>
+        <ion-col col-12 no-padding>
+          <div class="detail-product" *ngIf="loadingFirst && !notiTimeout">
+            <div class="detail-inner" [ngClass]="{'show-detail': productDetail.body_html != 'Chưa có chi tiết sản phẩm'}" [innerHTML]="productDetail.body_html"></div>
+            <div class="bg-top-more" *ngIf="productDetail.body_html != 'Chưa có chi tiết sản phẩm' && productDetail.body_html.length > 300">
+            </div>
+            <div class="show-more" tappable (tap)="showMore()" *ngIf="productDetail.body_html != 'Chưa có chi tiết sản phẩm' && productDetail.body_html.length > 300"><a>Xem tất cả</a>
+              <!-- <ion-icon name="arrow-down"></ion-icon> -->
+            </div>
+            <!-- <div class="show-more" tappable (tap)="showMore()" *ngIf="!showdes && productDetail.body_html != 'Chưa có chi tiết sản phẩm' && productDetail.body_html.length > 300">Rút gọn
+              <ion-icon name="arrow-up"></ion-icon>
+            </div> -->
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- thong so ki thuat -->
+    <ion-grid id="thongso">
+      <ion-row>
+        <ion-col col-12 class="ion-customer-header">
+            Thông số kĩ thuật
+        </ion-col>
+        <ion-col col-12 no-padding>
+          <div class="detail-product" *ngIf="loadingFirst && !notiTimeout">
+            <div class="detail-inner" [ngClass]="{'show-detail': productDetail.thong_so != 'Chưa có thông số sản phẩm'}" [innerHTML]="productDetail.thong_so"></div>
+            <div class="bg-top-more" *ngIf="productDetail.thong_so != 'Chưa có thông số sản phẩm' && productDetail.thong_so.length > 300">
+            </div>
+            <div class="show-more" tappable (tap)="showMore1()" *ngIf="productDetail.thong_so != 'Chưa có thông số sản phẩm' && productDetail.thong_so.length > 300"><a>Xem tất cả</a>
+              <!-- <ion-icon name="arrow-down"></ion-icon> -->
+            </div>
+            <!-- <div class="show-more" tappable (tap)="showMore1()" *ngIf="!showdes1 && productDetail.thong_so != 'Chưa có thông số sản phẩm' && productDetail.thong_so.length > 300">Rút gọn
+              <ion-icon name="arrow-up"></ion-icon>
+            </div> -->
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- video san pham -->
+    <ion-grid id="video">
+      <ion-row>
+        <ion-col col-12 no-padding *ngIf="loadingFirst && !notiTimeout">
+          <div class="detail-product">
+            <div class="detail-title" *ngIf="video != 'video giới thiệu' && video != null">
+              Video về sản phẩm
+            </div>
+            <div class="video-product" *ngIf="video != 'video giới thiệu' && video != null">
+              <!-- <div class="video-product" [innerHTML]="video"> -->
+              <!-- {{video}} -->
+              <iframe [src]="video" frameborder="0" allowfullscreen width="100%"></iframe>
+            </div>
+            <div class="video-product" *ngIf="video == 'video giới thiệu' || video == null">
+              Chưa có video về sản phẩm này.
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!--end-->
+    <!-- san pham cung nha san xuat (sp lien quan) -->
+    <!-- san pham cung nha san xuat (sp lien quan) -->
+    <ion-grid name="product-related" *ngIf="loadingFirst && !notiTimeout">
+      <!--Thanh tiêu đề và nút xem tất cả-->
+      <ion-row class="product-related-header">
+        <ion-col col-8>
+          <p class="collection-title">Sản phẩm khác của nhà sản xuất</p>
+        </ion-col>
+        <ion-col col-4 text-right>
+          <button class="btn-vw" *ngIf="productDetail.related_handle != ''" tappable (tap)="openCollection($event, productDetail.related_handle, productDetail.related_title)">Xem tất cả</button>
+        </ion-col>
+      </ion-row>
+      <!--Slide danh sách sản phẩm-->
+      <ion-row *ngIf="productDetail.related_handle == ''">
+        <ion-col col-12>
+          Chưa có sản phẩm nào.
+        </ion-col>
+      </ion-row>
+      <ion-row name="collection products">
+        <ion-slides slidesPerView="2.5" spaceBetween="6" class="slide-collection">
+          <ion-slide *ngFor="let product of products">
+            <div class="pi">
+              <div class="pi__inner">
+                <div class="pi__image" tappable (tap)="productTapped($event, product.handle)">
+                  <img src="{{product.featured_image}}">
+                </div>
+                <div class="pi__info">
+                  <p class="pi__title" tappable (tap)="productTapped($event, product.handle)">{{product.title}}</p>
+                  <p class="pi__price">
+                    {{product.price_format}}
+                    <del class="compare-price" *ngIf="product.compare_at_price != 0">{{product.compare_at_price_format}}</del>
+                    <span class="sale-off" *ngIf="product.sale != '-0%'">{{product.sale}}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </ion-row>
+    </ion-grid>
+    <!-- San pham da xem -->
+    <ion-grid name="product-related" class="mg-bt-45">
+      <!--Thanh tiêu đề và nút xem tất cả-->
+      <ion-row class="product-related-header">
+        <ion-col col-8>
+          <p class="collection-title" href="/">Các sản phẩm đã xem</p>
+        </ion-col>
+        <ion-col col-4 text-right>
+          <button class="btn-vw" tappable (tap)="viewSeenProduct()">Xem tất cả</button>
+        </ion-col>
+      </ion-row>
+      <!--Slide danh sách sản phẩm-->
+      <ion-row name="collection products">
+        <ion-slides slidesPerView="2.5" spaceBetween="6" class="slide-collection">
+          <ion-slide *ngFor="let product of listSeenProducts">
+            <div class="pi">
+              <div class="pi__inner">
+                <div class="pi__image" tappable (tap)="productTappedHasSeen($event, product.handle)">
+                  <img src="{{product.featured_image}}">
+                </div>
+                <div class="pi__info">
+                  <p class="pi__title" tappable (tap)="productTappedHasSeen($event, product.handle)">{{product.title}}</p>
+                  <p class="pi__price" *ngIf="(isAgencyRegular && product.isWholeSale) || !product.isWholeSale">
+                    {{product.price_format}}
+                    <del class="compare-price" *ngIf="product.compare_at_price != 0">{{product.compare_at_price_format}}</del>
+                    <span class="sale-off" *ngIf="product.sale != '-0%'">{{product.sale}}</span>
+                  </p>
+                  <p class="pi__price" *ngIf="(!isAgencyRegular && product.isWholeSale)">
+                    0₫
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- <ion-fab class="back-to-home" right bottom tappable (tap)="goHome()">
+    <button ion-fab color="danger"><ion-icon name="home"></ion-icon></button>
+  </ion-fab> -->
+</ion-content>
+<ion-footer *ngIf="loadingFirst && !notiTimeout">
+  <ion-grid class="bottom-fixed" no-padding>
+    <ion-row class="bg-white">
+      <ion-col col-2>
+        <div class="bt-f-left" tappable (tap)="goHome()">
+          <ion-icon name="home"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col col-10>
+        <!-- sp thuộc nhóm sp bán buôn? type user là đại lý -->
+        <div class="bt-f-right" text-uppercase tappable (tap)="presentVaraint(productDetail)" *ngIf="(authService.user | async) && isAgencyRegular && productDetail.isWholeSale">
+          <ion-icon ios="ios-cart" md="md-cart"></ion-icon> Mua hàng
+        </div>
+        <!-- sp thuộc nhóm sp bán buôn? type user không là đại lý -->
+        <div class="bt-f-right" text-uppercase *ngIf="!isAgencyRegular && productDetail.isWholeSale">
+          <ion-icon ios="ios-cart" md="md-cart"></ion-icon> Áp dụng với tổng đại lý
+        </div>
+        <!-- sp không thuộc nhóm sp bán buôn? type user whatever -->
+        <div class="bt-f-right" text-uppercase tappable (tap)="presentVaraint(productDetail)" *ngIf="!productDetail.isWholeSale">
+          <ion-icon ios="ios-cart" md="md-cart"></ion-icon> Mua hàng
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
+<!-- loading -->
+<ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="!loadingFirst && !notiTimeout">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+  </div>
+</ion-loading>

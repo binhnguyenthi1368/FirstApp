@@ -1,0 +1,99 @@
+<!-- <ion-header color="primary">
+  <ion-navbar>
+    <ion-title text-uppercase class="title-modal">
+      Thông báo
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button tappable (tap)="dismiss()" class="fsize-24" padding-horizontal>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header> -->
+<ion-header>
+  <ion-navbar class="header-back">
+    <ion-title>Thông báo</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="bg-timeout" *ngIf="errNoti && !loadingFirst">
+    <ion-row text-center class="mg-auto">
+      <ion-col col-12 class="fsize-19" margin-top>
+        Lỗi!
+      </ion-col>
+      <ion-col col-12 margin-bottom>
+        Vui lòng kiểm tra lại kết nối!
+      </ion-col>
+      <ion-col col-12 class="fsize-30">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list *ngIf="!errNoti && notis?.length > 0">
+    <ion-item-sliding *ngFor="let noti of notis">
+      <ion-item tappable (tap)="viewNotification(noti)" >
+        <ion-thumbnail item-start>
+          <img src="{{noti.image}}">
+        </ion-thumbnail>
+        <h4>{{noti.title}}</h4>
+        <ion-col class="fsize-12" col-8 no-padding >
+          {{noti.published_at | date: 'dd/MM/yyyy H:mm'}}
+        </ion-col>
+        <button ion-button item-end class="read-more" clear>
+            <span *ngIf="noti.seen == true" >
+              Đã đọc
+            </span>
+            <span *ngIf="noti.seen == false" >
+              Chưa đọc
+            </span>
+        </button>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
+<!-- loading -->
+<ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="!loadingFirst && !errNoti">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+  </div>
+</ion-loading>

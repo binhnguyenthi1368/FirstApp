@@ -1,0 +1,23 @@
+page-policy {
+  // .toolbar ion-title,
+  // .toolbar-md ion-title,
+  // .toolbar-ios ion-title {
+  //   padding: 0 40px !important;
+    ion-title {
+      // width: 80% !important;
+    }
+  // }
+  
+  ion-card {
+    background: #fff !important;
+    ion-card-header {
+      font-size: 14px;
+    }
+    ion-card-content {
+      font-size: 12px;
+    }
+  }
+  .bg-white.row {
+    min-height: 100%;
+  }
+}

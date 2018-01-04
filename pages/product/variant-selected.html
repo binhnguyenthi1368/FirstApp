@@ -1,0 +1,115 @@
+<ion-footer>
+  <ion-grid class="bg-white">
+    <ion-row>
+      <ion-col col-4>
+        <img src="{{variantImage}}" />
+      </ion-col>
+      <ion-col col-8 padding-left>
+        <div class="product__price"*ngIf="variantPrice != '0₫'">
+          <del class="compare-price" *ngIf="variantComparePrice != '0₫'">{{variantComparePrice}}</del>
+          {{variantPrice}}
+          <div *ngIf="variantQuantity != 0">Còn: {{variantQuantity}} sản phẩm</div>
+          <div *ngIf="variantQuantity == 0">Hết hàng</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row class="variant-selected" padding-bottom *ngIf="selectedProduct.variants?.length > 1">
+      <p col-12>Chọn loại hàng </p>
+      <div col-12>
+        <ion-list radio-group no-padding>
+          <ion-row>
+            <ng-container *ngFor="let variant of selectedProduct.variants; let isFirst = first; let num = index">
+              <ion-col col-6 *ngIf="variant.option1 != null && variant.option1 != '' && variant.option1 != 'Default Title'">
+                <ion-item [class.item-radio-checked]="isFirst">
+                  <ion-label>
+                    <span *ngIf="variant.option1 != null && variant.option1 != '' && variant.option1 != 'Default Title'">{{variant.option1}} </span>
+                    <span *ngIf="variant.option2 != null && variant.option2 != ''">{{variant.option2}} </span>
+                    <span *ngIf="variant.option3 != null && variant.option3 != ''">/ {{variant.option3}}</span>
+                  </ion-label>
+                  <ion-radio value="{{num}}" tappable (tap)="changeVariant(num)" #selectedVariant [disabled]="variant.inventory_quantity < 1"></ion-radio>
+                </ion-item>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+        </ion-list>
+      </div>
+    </ion-row> -->
+    <!-- sp không thuộc nhóm sp bán buôn -->
+    <ion-row class="variant-selected" padding-bottom *ngIf="selectedProduct.variants?.length > 1 && !selectedProduct.isWholeSale">
+      <p col-12>Chọn loại hàng </p>
+      <div col-12>
+        <ion-list radio-group no-padding>
+          <ion-row>
+            <ng-container *ngFor="let variant of selectedProduct.variants; let isFirst = first; let num = index">
+              <ion-col col-6 *ngIf="variant.option1 != null && variant.option1 != '' && variant.option1 != 'Default Title'">
+                <ion-item [class.item-radio-checked]="isFirst">
+                  <ion-label>
+                    <span *ngIf="variant.option1 != null && variant.option1 != '' && variant.option1 != 'Default Title'">{{variant.option1}} </span>
+                    <span *ngIf="variant.option2 != null && variant.option2 != ''">{{variant.option2}} </span>
+                    <span *ngIf="variant.option3 != null && variant.option3 != ''">/ {{variant.option3}}</span>
+                  </ion-label>
+                  <ion-radio value="{{num}}" tappable (tap)="changeVariant(num)" #selectedVariant [disabled]="variant.inventory_quantity < 1"></ion-radio>
+                </ion-item>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+        </ion-list>
+      </div>
+    </ion-row>
+
+    <!-- sp thuộc nhóm sp bán buôn, variant đối với tổng đại lý Bắc -->
+    <ion-row class="variant-selected" padding-bottom *ngIf="selectedProduct.variants?.length > 1 && isAgencyRegular && selectedProduct.isWholeSale">
+      <p col-12>Chọn loại hàng </p>
+      <div col-12>
+        <ion-list radio-group no-padding>
+          <ion-row>
+            <ng-container *ngFor="let variant of selectedProduct.variants; let isFirst = first; let num = index">
+              <ion-col col-6 *ngIf="variant.option1 != null && variant.option1 != '' && variant.option1 != 'Default Title' ">
+                <ion-item [class.item-radio-checked]="isFirst">
+                  <ion-label>
+                    <span *ngIf="variant.option1 != null && variant.option1 != '' && variant.option1 != 'Default Title'">{{variant.option1}} </span>
+                    <span *ngIf="variant.option2 != null && variant.option2 != ''">{{variant.option2}} </span>
+                    <span *ngIf="variant.option3 != null && variant.option3 != ''">/ {{variant.option3}}</span>
+                  </ion-label>
+                  <ion-radio value="{{num}}" tappable (tap)="changeVariant(num)" #selectedVariant [disabled]="variant.inventory_quantity < 1"></ion-radio>
+                </ion-item>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+        </ion-list>
+      </div>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-5 class="qty-title">Số lượng</ion-col>
+      <ion-col col-7 class="mg-center">
+        <ion-input type="number" class="qty-num" value="{{num}}" min="1" (keyup)="changeNum(qtynum.value)" #qtynum></ion-input>
+        <button ion-button clear class="qty-minus" tappable (tap)="doMinus()">
+          <ion-icon ios="ios-remove" md="md-remove"></ion-icon>
+        </button>
+        <button ion-button clear class="qty-plus" tappable (tap)="doPlus()">
+          <ion-icon ios="ios-add" md="md-add"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid no-padding>
+    <ion-row class="white-1">
+      <ion-col col-6 *ngIf="variantQuantity > 0">
+        <div class="bt-f-left" text-uppercase tappable (tap)="addCart(qtynum.value)">
+          Thêm vào giỏ
+        </div>
+      </ion-col>
+      <ion-col col-6 *ngIf="variantQuantity > 0">
+        <div class="bt-f-right" text-uppercase tappable (tap)="gotoCart(qtynum.value)">
+          Mua ngay
+        </div>
+      </ion-col>
+      <ion-col col-12 *ngIf="variantQuantity == 0">
+        <div class="bt-f-right" text-uppercase>
+          Hết hàng
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

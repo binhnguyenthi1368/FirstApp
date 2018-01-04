@@ -1,0 +1,163 @@
+<!--
+  Generated template for the OtherPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar class="header-back">
+    <ion-title *ngIf="checkFavoriteProduct">Sản phẩm yêu thích</ion-title>
+    <ion-title *ngIf="checkSeenPro">Sản phẩm đã xem</ion-title>
+    <ion-title *ngIf="checkDetailProduct">Chi tiết sản phẩm</ion-title>
+    <ion-title *ngIf="checkQr">Mời bạn bè, Nhận thưởng</ion-title>
+    <ion-title *ngIf="checkThongSoProduct">Thông số kỹ thuật</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content no-padding>
+  <!-- San pham yeu thich -->
+  <ion-grid *ngIf="checkFavoriteProduct && listFavoriteProducts?.length > 0 && listFavoriteProducts !== null">
+    <ion-row name="collection products">
+      <ion-col col-6 *ngFor="let product of listFavoriteProducts">
+        <div class="pi">
+          <div class="pi__inner">
+            <div class="pi__image" tappable (tap)="productTapped($event, product.handle)">
+              <img src="{{product.images[0]}}" />
+            </div>
+            <div class="pi__info">
+              <p class="pi__title" tappable (tap)="productTapped($event, product.handle)">{{product.title}}</p>
+              <p class="pi__price">
+                {{product.price}}
+                <del class="compare-price" *ngIf="product.compare_at_price != '0₫'">{{product.compare_at_price}}</del>
+                <span class="sale-off" *ngIf="product.sale != '0%' && product.sale != '-0%'">{{product.sale}}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- San pham da xem -->
+  <ion-grid *ngIf="checkSeenPro && listSeenProducts?.length > 0 && listSeenProducts !== null">
+    <ion-row name="collection products">
+      <ion-col col-6 *ngFor="let product of listSeenProducts">
+        <div class="pi">
+          <div class="pi__inner">
+            <div class="pi__image" tappable (tap)="productTapped($event, product.handle)">
+              <img src="{{product.featured_image}}" />
+            </div>
+            <div class="pi__info">
+              <p class="pi__title" tappable (tap)="productTapped($event, product.handle)">{{product.title}}</p>
+              <p class="pi__price">
+                {{product.price_format}}
+                <del class="compare-price" *ngIf="product.compare_at_price != '0'">{{product.compare_at_price_format}}</del>
+                <span class="sale-off" *ngIf="product.sale != '0%' && product.sale != '-0%'">{{product.sale}}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="no-has-result" no-padding *ngIf="((listSeenProducts?.length == 0 || listSeenProducts == null) && checkSeenPro) || ((listFavoriteProducts?.length == 0 || listFavoriteProducts == null) && checkFavoriteProduct)">
+    <ion-row no-padding text-center>
+      <img src="assets/images/no-product.png">
+      <ion-col col-12 text-center>
+        <p class="noti-no-result fsize-14">Không có sản phẩm để hiển thị!</p>
+        <p class="fsize-12">Danh mục này hiện đang trống.</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- chi tiet sp -->
+  <ion-grid class="product-content" *ngIf="checkDetailProduct">
+    <div class="detail-inner" [innerHTML]="detailProduct"></div>
+  </ion-grid>
+  <!-- ma code ca nhan -->
+  <ion-grid *ngIf="checkQr">
+    <ion-row>
+      <ion-col text-center col-12 class="qr-img" padding-vertical>
+        <img src="assets/images/qr-code.jpg">
+      </ion-col>
+    </ion-row>
+    <ion-row class="qr-text" align-items-center>
+      <ion-col col-6>
+        <ion-item no-padding>
+          <ion-label stacked>Mã giới thiệu</ion-label>
+          <ion-input type="text" value="{{myCode}}" readonly text-uppercase></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-6 text-right>
+        <button ion-button class="copy-qr" margin-right tappable (tap)="copyCode()">Sao chép mã</button>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center class="share" text-center padding-vertical>
+      <ion-col col-12 text-uppercase padding-bottom>
+        Chia sẻ mã với bạn bè
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button class="fb-share">
+          <ion-icon name="logo-facebook"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button class="fb-share vibrant">
+          <ion-icon name="chatbubbles"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button class="gg-share" color="danger">
+          <ion-icon name="logo-googleplus"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- thong so ky thuat sp -->
+  <ion-grid class="product-content" *ngIf="checkThongSoProduct">
+    <div class="detail-inner" [innerHTML]="thongSoProduct"></div>
+  </ion-grid>
+</ion-content>
+<!-- loading ma code-->
+<!-- <ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="!loadingFirst && checkQr">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+  </div>
+</ion-loading> -->

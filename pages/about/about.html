@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-navbar class="header-back">
+    <ion-title>Về chúng tôi</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="bg-timeout" *ngIf="errNoti && !loadingFirst">
+    <ion-row text-center class="mg-auto">
+      <ion-col col-12 class="fsize-19" margin-top>
+        Lỗi!
+      </ion-col>
+      <ion-col col-12 margin-bottom>
+        Vui lòng kiểm tra lại kết nối!
+      </ion-col>
+      <ion-col col-12 class="fsize-30">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-row *ngIf="loadingFirst && !errNoti" class="bg-white" padding>
+    <div [innerHTML]="contentPage"></div>
+  </ion-row>
+  <ion-grid class="dogo-footer" *ngIf="loadingFirst && !errNoti">
+    <ion-grid class="payments">
+      <ion-row>
+        <ion-col>
+          <p class="payments-title" text-left>Các hình thức thanh toán</p>
+          <img src="assets/images/payments.png">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="policies" tappable (tap)="openPolicy()">
+      <ion-row>
+        <ion-col *ngFor="let n of [1,2,3]">
+          <img src="assets/images/polici_{{n}}.png">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="sharing">
+      <ion-row>
+        <ion-col *ngFor="let t of ['title',1,2,3,4]">
+          <img height="32" src="assets/images/share-{{t}}.png">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="sub-footer">
+      <ion-row>
+        <ion-col>
+          <img height="40" src="assets/images/logo/dogo-logo.png">
+          <div class="company-info">
+            <h2>CÔNG TY TNHH DOGO VIETNAM - ĐIỀU HÀNH BỞI BT GROUP</h2>
+            <p>Giấy CNĐKDN: 0308808888</p>
+            <p>Ngày cấp: 06/10/2017</p>
+            <p>Cơ quan cấp: Phòng Đăng ký kinh doanh – Sở kế hoạch và Đầu tư TP.Hà Nội
+              <p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-grid>
+</ion-content>
+<ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="!loadingFirst && !errNoti">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+  </div>
+</ion-loading>

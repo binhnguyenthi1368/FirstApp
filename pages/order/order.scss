@@ -1,0 +1,92 @@
+page-order {
+  ion-segment {
+    background: #fff;
+  }
+	.order-segment.segment-button  {
+    color: #aaaaaa;
+    border: none;
+    background: #fff;
+    border-bottom: 2px solid #aaaaaa;
+    font-weight: bold;
+    height: 3.8rem;
+    line-height: 3.8rem;
+    width: 50%;
+    &:first-of-type, &:last-of-type {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0px;
+    }
+    &.segment-activated {
+      background: #fff;
+      color: color($colors, dogo-primary);;
+      border-bottom: 2px solid color($colors, dogo-primary);;
+    }
+  }
+  // .toolbar ion-title.title-pad,
+  // .toolbar-md ion-title.title-pad,
+  // .toolbar-ios ion-title.title-pad {
+  //   padding: 0;
+  // }
+  .order-item{
+    margin-bottom: 15px;
+    display: block;
+  }
+  .no-has-order {
+    background-color: #fff;
+    // min-height: 635px;
+    height: -webkit-fill-available;
+    img {
+      padding: 20px 90px;
+      max-height: 250px;
+      margin: auto;
+    }
+    .noti-no-order {
+      color: #f28f58;
+      font-weight: bold;
+    }
+    p.fsize-15{
+      color: #737373;
+    }
+  }
+  .datetime .datetime-text {
+    min-height: inherit;
+    border: none;
+    line-height: normal;
+  }
+  .order-bg {
+    background: #fff;
+    margin-bottom: 3px;
+    padding: 8px 12px;
+    .infor-item {
+      .item-title {
+        padding-bottom: 0;
+        font-size: 14px;
+      }
+      .item-variant {
+        font-size: 12px;
+        color: #908f8f;
+      }
+      .product__price {
+        font-size: 12px;
+      }
+    }
+    .count-item {
+      font-size: 12px;
+      color: #adacac;
+    }
+    p {
+      display: inline;
+      font-size: 12px;
+    }
+    .blue-dogo {
+      color: color($colors, dogo-primary);
+      &.total {
+        font-size: 14px;
+      }
+    }
+    img {
+      max-height: 64px;
+    }
+  }
+}

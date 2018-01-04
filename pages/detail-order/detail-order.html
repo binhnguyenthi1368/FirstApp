@@ -1,0 +1,259 @@
+<!--
+  Generated template for the DetailOrderPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <button ion-button>
+        <ion-icon class="fsize-22" name="close" tappable (tap)="dismiss()" padding-horizontal ></ion-icon>  
+      </button>
+      <button ion-button disabled>
+        Chi tiết đơn hàng
+      </button>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content no-padding>
+  <ion-grid class="bg-timeout" *ngIf="notiTimeout && !loadingFirst">
+    <ion-row text-center class="mg-auto">
+      <ion-col col-12 class="fsize-19" margin-top>
+        Lỗi!
+      </ion-col>
+      <ion-col col-12 margin-bottom>
+        Vui lòng kiểm tra lại kết nối!
+      </ion-col>
+      <ion-col col-12 class="fsize-30">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row class="order-bg">
+      <ion-col col-xs-6 text-left no-padding>
+        Mã đơn hàng
+      </ion-col>
+      <ion-col col-xs-6 text-right no-padding>
+        {{detail.name}}
+      </ion-col>
+    </ion-row>
+    <ion-row class="order-bg" align-items-center *ngFor="let item of detail.line_items">
+      <ion-col col-2>
+        <img src="{{item.image.src}}">
+      </ion-col>
+      <ion-col  col-10 class="infor-item">
+        <ion-row text-left>
+          <ion-col col-12 class="item-title">
+            {{item.title}}
+          </ion-col>
+        </ion-row>
+        <ion-row text-left *ngIf="item.variant_title != 'Default Title' ">
+          <ion-col col-12 class="item-variant" >
+            Loại hàng: {{item.variant_title}}
+          </ion-col>
+        </ion-row>
+        <ion-row text-left>
+          <ion-col col-9>
+            <div class="product__price" no-padding>
+              <!-- <del class="compare-price">{{item.price | number:'3.0-5'}}₫</del> -->
+              {{item.price | number:'3.0-5'}}₫
+            </div>
+          </ion-col>
+          <ion-col col-3 text-right>
+            x {{item.quantity}}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row class=" order-bg ">
+      <ion-col col-3 class="count-item " no-padding>
+        {{detail.count_items}} sản phẩm
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row *ngIf=" detail.discount_codes != undefined && detail.discount_codes != null && detail.discount_codes?.length > 0">
+      <ion-col col-12>
+        <ion-row *ngFor="let code of detail.discount_codes">
+          <ion-col col-xs-6 text-left>
+            Áp dụng khuyến mãi:
+          </ion-col>
+          <ion-col col-xs-6 text-right>
+            {{code.code}}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row>
+      <ion-col col-xs-9 text-left>
+        Tiền khuyến mãi được giảm:
+      </ion-col>
+      <ion-col col-xs-3 text-right *ngIf="detail.total_discounts > 0 && detail.total_discounts > 999">
+        {{detail.total_discounts | number:'3.0-5'}}₫
+      </ion-col>
+      <ion-col col-xs-3 text-right *ngIf="detail.total_discounts > 0 && detail.total_discounts < 1000">
+        {{detail.total_discounts}}₫
+      </ion-col>
+      <ion-col col-xs-3 text-right *ngIf="detail.total_discounts == 0">
+        {{detail.total_discounts}}₫
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row>
+      <ion-col col-xs-6 text-left>
+        Phí vận chuyển:
+      </ion-col>
+      <ion-col col-xs-6 text-right *ngIf="detail.shipping_price > 0 && detail.shipping_price > 999">
+        {{detail.shipping_price | number:'3.0-5'}}₫
+      </ion-col>
+      <ion-col col-xs-6 text-right *ngIf="detail.shipping_price > 0 && detail.shipping_price < 1000">
+        {{detail.shipping_price}}₫
+      </ion-col>
+      <ion-col col-xs-6 text-right *ngIf="detail.shipping_price == 0">
+        {{detail.shipping_price}}₫
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row>
+      <ion-col col-xs-6 text-left>
+        Tổng thanh toán:
+      </ion-col>
+      <ion-col col-xs-6 text-right>
+        {{detail.total_price | number:'3.0-5'}}₫
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row>
+      <ion-col col-xs-6 text-left>
+        Tình trạng thanh toán:
+      </ion-col>
+      <ion-col col-xs-6 text-right *ngIf="detail.financial_status == 'paid'">Đã thanh toán</ion-col>
+      <ion-col col-xs-6 text-right *ngIf="detail.financial_status == 'refunded'">Đã hoàn trả</ion-col>
+      <ion-col col-xs-6 text-right *ngIf="detail.financial_status != 'refunded' && detail.financial_status != 'paid'">Đang thực hiện</ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row>
+      <ion-col col-xs-6 text-left>
+        Tình trạng vận chuyển:
+      </ion-col>
+      <ion-col col-xs-6 text-right *ngIf="detail.fulfillment_status != 'fulfilled'">Chưa vận chuyển</ion-col>
+      <ion-col col-xs-6 text-right *ngIf="detail.fulfillment_status == 'fulfilled'">Đã vận chuyển</ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout && detail.cancelled_status == 'cancelled'">
+    <ion-row>
+      <ion-col col-xs-6 text-left>
+        Trạng thái đơn
+      </ion-col>
+      <ion-col col-xs-6 text-right>Đã hủy</ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout && detail.cancelled_status == 'cancelled' && detail.cancel_reason != 'null' && detail.cancel_reason != null">
+    <ion-row align-items-center>
+      <ion-col col-xs-6 text-left>
+        Lý do
+      </ion-col>
+      <ion-col col-xs-6 text-right>{{detail.cancel_reason}}</ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout && detail.cancelled_status != 'cancelled'">
+    <ion-row>
+      <ion-col col-xs-8 text-left>
+        Thưởng tích lũy:
+      </ion-col>
+      <ion-col col-xs-4 text-right *ngIf="detail.reward_points_2 <= 0">
+        0 xu
+      </ion-col>
+      <ion-col col-xs-4 text-right *ngIf="detail.reward_points_2 > 999">
+        {{detail.reward_points_2 | number:'3.0-5'}} xu
+      </ion-col>
+      <ion-col col-xs-4 text-right *ngIf="detail.reward_points_2 > 0 && detail.reward_points_2 < 1000">
+        {{detail.reward_points_2}} xu
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row>
+      <ion-col col-xs-6 text-left>
+        Địa chỉ giao hàng:
+      </ion-col>
+      <ion-col col-xs-6 text-right>
+        {{detail.billing_address.address1}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row>
+      <ion-col col-xs-6 text-left>
+        Người nhận:
+      </ion-col>
+      <ion-col col-xs-6 text-right>
+        {{detail.billing_address.first_name}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="loadingFirst && !notiTimeout">
+    <ion-row>
+      <ion-col col-xs-6 text-left>
+        Số điện thoại người nhận:
+      </ion-col>
+      <ion-col col-xs-6 text-right>
+        {{detail.billing_address.phone}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!-- loading -->
+<ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="!loadingFirst && !notiTimeout">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+  </div>
+</ion-loading>

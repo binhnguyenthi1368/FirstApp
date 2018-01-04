@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-navbar color="dogo-primary">
+    <!-- <button ion-button menuToggle> -->
+    <!-- <ion-buttons start> -->
+    <button ion-button menuToggle start tappable>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <!-- </ion-buttons> -->
+    <ion-title>
+      <img height="36" src="assets/images/logo/dogo-logo.png">
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button tappable (tap)="goSearch()">
+        <ion-icon ios="ios-search" md="md-search"></ion-icon>
+      </button>
+      <!-- <button ion-button>
+        <ion-icon ios="ios-call" md="md-call"></ion-icon>
+      </button> -->
+      <button ion-button tappable (tap)="gotoCart()">
+        <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+        <ion-badge>{{qtyItemCart}}</ion-badge>
+      </button>
+      <button ion-button tappable (tap)="showNoti({id: 111})">
+        <ion-icon ios="ios-notifications" md="md-notifications"></ion-icon>
+        <ion-badge>{{notiCounts}}</ion-badge>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="home-collection">
+    <!--các nhóm sp cấp 1-->
+    <ion-row class="horizontal-container-1">
+      <ion-col col-6 *ngFor="let collection of settings; let indexCol = index" class="horizontal">
+        <div class="horizontal-item" id="{{indexCol}}">
+          <a class="item-col min-h-100" tappable (tap)="iconChange(indexCol)" >
+          <!-- <img src="{{collection.image}}"> -->
+          <img src="{{collection.image}}"/>
+          <span class="transit" text-uppercase>{{collection.title}}</span>
+        </a>
+        </div>
+        <div class="inner-lv2" [ngClass]="{'in collapse': selectedIndex == indexCol}" [style.height.px]="collection.menu?.length | ceil">
+          <!-- nhóm sp cấp 2 -->
+          <ion-row class="col-lv2">
+            <ion-col col-4 *ngFor="let lv2Item of collection.menu">
+              <button ion-button outline full tappable (tap)="openCollection($event, lv2Item.handle, lv2Item.title, lv2Item.menu_lv3)" class="word-space">{{lv2Item.title}}</button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="notiTimeout && !loadingFirst" text-center class="mg-auto">
+      <ion-col col-12 class="fsize-19" margin-top>
+        Lỗi!
+      </ion-col>
+      <ion-col col-12 margin-bottom>
+        Vui lòng kiểm tra lại kết nối!
+      </ion-col>
+      <ion-col col-12 class="fsize-30">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+</ion-content>
+<!-- loading -->
+<!-- <ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="!loadingFirst && !notiTimeout">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+  </div>
+</ion-loading> -->

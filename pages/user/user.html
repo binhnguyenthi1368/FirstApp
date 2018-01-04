@@ -1,0 +1,221 @@
+<!--
+  Generated template for the UserPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar class="header-back">
+    <ion-title>Tài khoản</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only *ngIf="loadingFirst && !notiTimeout" color="text-light" tappable (tap)="updateUserInfo()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content no-padding class="card-background-page">
+  <!-- io -->
+  <!-- <ion-card no-margin margin-bottom class="list-choice" *ngIf="loadingFirst">
+    <ion-list>
+      <button ion-item tappable (tap)="showYourCode($event, 4)" no-padding>
+        <div class="circle-icon blue-light" margin-left>
+          <ion-icon name="barcode" icon-left></ion-icon>
+        </div>
+        <p>Mã giới thiệu cá nhân</p>
+      </button>
+      <button ion-item no-padding tappable (tap)="showCodeUser()">
+        <div class="circle-icon green-1" margin-left>
+          <ion-icon name="happy" icon-left></ion-icon>
+        </div>
+        <p>Mã giới thiệu đã áp dụng</p>
+      </button>
+    </ion-list>
+  </ion-card> -->
+  <ion-grid class="bg-timeout" *ngIf="notiTimeout && !loadingFirst">
+    <ion-row text-center class="mg-auto">
+      <ion-col col-12 class="fsize-19" margin-top>
+        Lỗi!
+      </ion-col>
+      <ion-col col-12 margin-bottom>
+        Vui lòng kiểm tra lại kết nối!
+      </ion-col>
+      <ion-col col-12 class="fsize-30">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-card no-padding no-margin class="list-choice" *ngIf="loadingFirst && !notiTimeout">
+    <ion-list>
+      <ion-item no-padding>
+        <ion-label stacked>Mã giới thiệu cá nhân</ion-label>
+        <ion-input type="text" value="{{infoAccount.code}}" readonly></ion-input>
+      </ion-item>
+      <ion-item no-padding>
+        <ion-label stacked>Mã giới thiệu đã áp dụng</ion-label>
+        <ion-input type="phone" value="{{infoAccount.invited_code}}" readonly></ion-input>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card no-padding no-margin margin-top class="list-choice" *ngIf="loadingFirst && !notiTimeout">
+    <ion-list>
+      <ion-item no-padding>
+        <ion-label stacked>Họ và tên</ion-label>
+        <ion-input [(ngModel)]="newInfo.first_name" #first_name="ngModel" type="text" value="{{infoAccount.first_name}} {{infoAccount.last_name}}"></ion-input>
+      </ion-item>
+      <ion-item no-padding>
+        <ion-label stacked>Số điện thoại</ion-label>
+        <ion-input *ngIf="infoAccount.default_address != null && infoAccount.default_address != undefined" value="{{infoAccount.default_address.phone}}" placeholder="Số điện thoại..." type="phone" readonly></ion-input>
+        <ion-input *ngIf="infoAccount.default_address == null || infoAccount.default_address == undefined" type="phone" value="" placeholder="Số điện thoại..." readonly></ion-input>
+      </ion-item>
+      <ion-item no-padding class="large">
+        <ion-label stacked>Email</ion-label>
+        <ion-input type="email" value="{{infoAccount.email}}" readonly></ion-input>
+      </ion-item>
+      <ion-item no-padding>
+        <ion-label stacked>Thay đổi mật khẩu</ion-label>
+        <ion-input type="password" value="TestHaravan" readonly></ion-input>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card no-padding no-margin margin-top class="list-choice" *ngIf="loadingFirst && !notiTimeout">
+    <ion-list>
+      <ion-item no-padding>
+        <ion-label stacked>Địa chỉ</ion-label>
+        <ion-input *ngIf="infoAccount.default_address != null && infoAccount.default_address != undefined" type="text" value="{{infoAccount.default_address.address1}}" placeholder="Địa chỉ..." [(ngModel)]="newInfo.address1" #address1="ngModel" ></ion-input>
+        <ion-input *ngIf="infoAccount.default_address == null || infoAccount.default_address == undefined" type="text" value="" placeholder="Địa chỉ..." [(ngModel)]="newInfo.address1" #address1="ngModel" ></ion-input>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card no-margin margin-top margin-bottom class="list-choice" *ngIf="loadingFirst && !notiTimeout">
+    <ion-list>
+      <ion-item no-padding>
+        <ion-label no-margin>Ngày/tháng/năm sinh</ion-label>
+        <ion-datetime placeholder="Chọn" min="1940" max="2008" no-padding displayFormat="DD/MM/YYYY" [(ngModel)]="birthday"></ion-datetime>
+      </ion-item>
+      <ion-item no-padding>
+        <ion-label no-margin>Giới tính</ion-label>
+        <ion-select [(ngModel)]="gender" placeholder="Chọn" interface="action-sheet">
+          <ion-option value="1">Nam</ion-option>
+          <ion-option value="0">Nữ</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card no-padding no-margin margin-top class="list-choice" *ngIf="loadingFirst && !notiTimeout">
+    <ion-list>
+      <ion-item no-padding>
+        <ion-label stacked>Tên ngân hàng</ion-label>
+        <ion-input type="text" value="" placeholder="Tên ngân hàng..." name="bank" [(ngModel)]="newInfo.bank" #bank="ngModel" ></ion-input>
+      </ion-item>
+      <ion-item no-padding>
+        <ion-label stacked>Chi nhánh</ion-label>
+        <ion-input type="text" value="" placeholder="Chi nhánh..." name="bank_branch" [(ngModel)]="newInfo.bank_branch" #bank_branch="ngModel" ></ion-input>
+      </ion-item>
+      <ion-item no-padding>
+        <ion-label stacked>Tên chủ thẻ</ion-label>
+        <ion-input type="text" value="" placeholder="Tên chủ thẻ..." name="account_name" [(ngModel)]="newInfo.account_name" #account_name="ngModel" ></ion-input>
+      </ion-item>
+      <ion-item no-padding>
+        <ion-label stacked>Số tài khoản</ion-label>
+        <ion-input type="number" value="" placeholder="Nhập số tài khoản..." name="account_number" [(ngModel)]="newInfo.account_number" #account_number="ngModel" ></ion-input>
+      </ion-item>
+      <ion-item no-padding margin-bottom>
+        <ion-label stacked>Mã số thuế cá nhân</ion-label>
+        <ion-input type="number" value="" placeholder="Mã số thuế cá nhân..." name="individual_tax_number" [(ngModel)]="newInfo.individual_tax_number" #individual_tax_number="ngModel" ></ion-input>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>
+<!-- loading -->
+<ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="!loadingFirst && !notiTimeout">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+  </div>
+</ion-loading>
+<!-- loading -->
+<ion-loading role="dialog" class="loading-ios loadingdone" style="z-index: 10001;" *ngIf="loadingSecond && !notiTimeout">
+  <ion-backdrop disable-activated="" hidden="false" role="presentation" tappable="" class="backdrop-no-tappable"></ion-backdrop>
+  <div class="loading-wrapper">
+    <div class="loading-spinner">
+      <ion-spinner class="spinner spinner-ios spinner-ios-ios">
+        <svg viewBox="0 0 64 64" style="transform: rotate(180deg); animation-delay: -1000ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(210deg); animation-delay: -916.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(240deg); animation-delay: -833.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(270deg); animation-delay: -750ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(300deg); animation-delay: -666.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(330deg); animation-delay: -583.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(0deg); animation-delay: -500ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(30deg); animation-delay: -416.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(60deg); animation-delay: -333.333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(90deg); animation-delay: -250ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(120deg); animation-delay: -166.667ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+        <svg viewBox="0 0 64 64" style="transform: rotate(150deg); animation-delay: -83.3333ms; animation-duration: 1000ms;">
+          <line transform="translate(32,32)" y1="17" y2="29"></line>
+        </svg>
+      </ion-spinner>
+    </div>
+  </div>
+</ion-loading>
